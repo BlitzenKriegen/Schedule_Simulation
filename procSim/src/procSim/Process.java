@@ -17,6 +17,11 @@ public class Process {
         this.cpuBurst = cpu;
     }
 
+    public Process() {
+        this.ioBurst = 0;
+        this.cpuBurst = 0;
+    }
+
     public int getIoBurst() {
         return ioBurst;
     }
