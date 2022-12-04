@@ -1,56 +1,44 @@
+// Enrik Rushiti & Kiril Sikov
 package procSim;
 
 public class Settings {
-    private int maxProc;
-    private int maxCpu;
-    private int maxIO;
-    private int cpuBurst;
-    private int ioBurst;
+    private int maxProcesses;
+    private int maxBurstTime;
+    private int defaultBurst;
 
     public Settings() {
-        this.maxProc = 0;
-        this.maxCpu = 0;
-        this.maxIO = 0;
-        this.cpuBurst = 0;
-        this.ioBurst = 0;
+        this.maxProcesses = 0;
+        this.maxBurstTime = 0;
+        this.defaultBurst = 0;
     }
 
-    public Settings(int proc, int mxCpu, int mxIO, int cpuB, int IOB) {
-        this.maxProc = proc;
-        this.maxCpu = mxCpu;
-        this.maxIO = mxIO;
-        this.cpuBurst = cpuB;
-        this.ioBurst = IOB;
+    public Settings(int maxProcesses, int maxBurstTime, int defaultBurst) {
+        this.maxProcesses = maxProcesses;
+        this.maxBurstTime = maxBurstTime;
+        this.defaultBurst = defaultBurst;
     }
 
-    public int getMaxProc() {
-        return maxProc;
+    public int getMaxProcesses() {
+        return maxProcesses;
     }
-    public void setMaxProc(int maxProc) {
-        this.maxProc = maxProc;
+
+    public void setMaxProcesses(int maxProcesses) {
+        this.maxProcesses = maxProcesses;
     }
-    public int getMaxCpu() {
-        return maxCpu;
+
+    public int getMaxBurstTime() {
+        return maxBurstTime;
     }
-    public void setMaxCpu(int maxCpu) {
-        this.maxCpu = maxCpu;
+
+    public void setMaxBurstTime(int maxBurstTime) {
+        this.maxBurstTime = maxBurstTime;
     }
-    public int getMaxIO() {
-        return maxIO;
+
+    public int getDefaultBurst() {
+        return defaultBurst;
     }
-    public void setMaxIO(int maxIO) {
-        this.maxIO = maxIO;
-    }
-    public int getCpuBurst() {
-        return cpuBurst;
-    }
-    public void setCpuBurst(int cpuBurst) {
-        this.cpuBurst = cpuBurst;
-    }
-    public int getIoBurst() {
-        return ioBurst;
-    }
-    public void setIoBurst(int ioBurst) {
-        this.ioBurst = ioBurst;
+
+    public void setDefaultBurst(int defaultBurst) {
+        this.defaultBurst = defaultBurst;
     }
 }
