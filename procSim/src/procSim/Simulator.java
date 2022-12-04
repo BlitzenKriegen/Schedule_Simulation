@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
+import java.util.Collections;
 
 public class Simulator {
 
@@ -12,21 +13,44 @@ public class Simulator {
     // private int timeQuantum = 4;
 
     public static void main(String[] args) {
-        /*Settings usrRules = getSettings();*/
-        Settings usrRules = new Settings(3, 10, 5);
-        List<Process> listOfProc = createProcList(usrRules);
+        /* Settings usrRules = getSettings(); */
+        Settings usrRules = new Settings(5, 10);
+        List<Process> listOfProcesses = createProcList(usrRules);
+        
         System.out.println("Running FCFS:");
-        FCFS(listOfProc);
+        FCFS(listOfProcesses);
 
+        double averageWaitingTime = 0;
+        int numOfProcesses = listOfProcesses.size();
+
+        // Print out the results
+        for (Process p : listOfProcesses) {
+            System.out.println("Process " + p.getPid() + " - burst time: " + p.getBurstTime() + ", waiting time: "
+                    + p.getWaitingTime() + ", turnaround time: " + p.getTurnaroundTime() + ", priority: " + p.getPriority());
+            System.out.println("----------------------------------------");
+            averageWaitingTime += p.getWaitingTime();
+        }
+
+        System.out.println("Average waiting time: " + (averageWaitingTime / numOfProcesses) + "ms");
     }
 
     private static List<Process> createProcList(Settings usrRules) {
         List<Process> ls = new ArrayList<>();
         Process proc = new Process();
+
+        ArrayList priorities = new ArrayList<>();
+        // fill up the priorities array with to match number of processes
+        for (int j = 0; j < usrRules.getMaxProcesses(); j++) {
+            priorities.add(j + 1);
+        }
+
+        // shuffle the priorities array so each process has a random priority
+        Collections.shuffle(priorities);
+
         for (int i = 0; i < usrRules.getMaxProcesses(); i++) {
             proc = createProc(usrRules.getMaxBurstTime());
             proc.setPid(i + 1);
-
+            proc.setPriority((int) priorities.get(i));
 
             ls.add(proc);
         }
@@ -45,36 +69,27 @@ public class Simulator {
         System.out.println("What is the maximum burst time for a process?");
         usrinp.setMaxBurstTime(inp.nextInt());
 
-        System.out.println("What is the default burst time in the Simulation?");
-        usrinp.setDefaultBurst(inp.nextInt());
-
         inp.close();
         return usrinp;
     }
 
-    /*
-    Process tst = createProc(max);*/
-
+    // generate a random process with a random burst time
     public static Process createProc(int maxBurstTime) {
-        int burstTime = new Random().nextInt(maxBurstTime) + 1; //between 1 and 10
+        int burstTime = new Random().nextInt(maxBurstTime) + 1; // between 1 and 10
         Process proc = new Process(burstTime);
         return proc;
     }
 
-
-    /* First Come First Serve Scheduling Algorithm
-     *  - Processes are executed in the order they arrive in the ready queue
-     * 
-    */
-    /**
-     * @param listOfProcesses
+    /*
+     * First Come First Serve Scheduling Algorithm
+     * - Processes are executed in the order they arrive in the ready queue
      */
     public static void FCFS(List<Process> listOfProcesses) {
         for (int i = 0; i < listOfProcesses.size(); i++) {
             Process currentProc = listOfProcesses.get(i);
-            
+
             // For processes with a pid > 1
-            if (i != 0) { 
+            if (i != 0) {
                 Process prevProc = listOfProcesses.get(i - 1);
                 currentProc.setWaitingTime(prevProc.getWaitingTime() + prevProc.getBurstTime());
                 currentProc.setTurnaroundTime(currentProc.getWaitingTime() + currentProc.getBurstTime());
@@ -85,15 +100,21 @@ public class Simulator {
                 currentProc.setTurnaroundTime(currentProc.getBurstTime());
             }
         }
-
-        // Print out the results
-        for (Process p : listOfProcesses) {
-            System.out.println("Process " + p.getPid() + " burst time: " + p.getBurstTime() + ", waiting time: " + p.getWaitingTime() + ", turnaround time: " + p.getTurnaroundTime());
-            System.out.println("----------------------------------------");
-        }
     }
 
+    /*
+     * Shortest Job First Scheduling Algorithm
+     * - Processes are executed in order of their burst time
+     */
+    public static void SJF(List<Process> listOfProcesses) {
+        
+        
+    
+    }
+
+
 }
+
 
 
 
