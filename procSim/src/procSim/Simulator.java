@@ -9,7 +9,7 @@ import java.util.Scanner;
 public class Simulator {
 
     // use this for round robin when we get to it
-    private int timeQuantum = 4;
+    // private int timeQuantum = 4;
 
     public static void main(String[] args) {
         /*Settings usrRules = getSettings();*/
@@ -23,11 +23,14 @@ public class Simulator {
     private static List<Process> createProcList(Settings usrRules) {
         List<Process> ls = new ArrayList<>();
         Process proc = new Process();
-        for (int i = 0; i < usrRules.getMaxProc(); i++) {
+        for (int i = 0; i < usrRules.getMaxProcesses(); i++) {
             proc = createProc(usrRules.getMaxBurstTime());
             proc.setPid(i + 1);
+
+
             ls.add(proc);
         }
+
         return ls;
     }
 
@@ -63,8 +66,11 @@ public class Simulator {
      *  - Processes are executed in the order they arrive in the ready queue
      * 
     */
+    /**
+     * @param listOfProcesses
+     */
     public static void FCFS(List<Process> listOfProcesses) {
-        for (int = 0; i < listOfProcesses.size(); i++) {
+        for (int i = 0; i < listOfProcesses.size(); i++) {
             Process currentProc = listOfProcesses.get(i);
             
             // For processes with a pid > 1
@@ -82,7 +88,8 @@ public class Simulator {
 
         // Print out the results
         for (Process p : listOfProcesses) {
-            System.out.println("Process " + p.getPid() + " waiting time: " + p.getWaitingTime() + " turnaround time: " + p.getTurnaroundTime());
+            System.out.println("Process " + p.getPid() + " burst time: " + p.getBurstTime() + ", waiting time: " + p.getWaitingTime() + ", turnaround time: " + p.getTurnaroundTime());
+            System.out.println("----------------------------------------");
         }
     }
 
