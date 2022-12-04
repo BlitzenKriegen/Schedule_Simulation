@@ -1,12 +1,12 @@
 // Enrik Rushiti & Kiril Sikov
 package procSim;
+// Enrik Rushiti & Kiril Sikov
 /**
  * The following is the implementation of the
  * "processes" within the scheduling simulator.
  * Processes contain burst time, which decrement
  * down by one as long as it stays within the processing
  * of the "cpu".
- * @author Kiril Sikov
  *
  */
 public class Process {
@@ -16,10 +16,10 @@ public class Process {
     private int waitingTime;
     private int turnaroundTime;
 
-    public Process(int burst, int pid, int priority) {
+    public Process(int burst) {
         this.burstTime = burst;
-        this.pid = pid;
-        this.priority = priority;
+        this.pid = 0;
+        this.priority = 0;
         this.waitingTime = 0;
         this.turnaroundTime = 0;
     }
@@ -33,7 +33,7 @@ public class Process {
     }
 
     public void decrementBurstTime() {
-        this.cpuBurst = this.cpuBurst -1;
+        this.burstTime = this.burstTime -1;
     }
 
     public int getBurstTime() {
@@ -76,3 +76,4 @@ public class Process {
         this.turnaroundTime = turnaroundTime;
     }
 }
+
