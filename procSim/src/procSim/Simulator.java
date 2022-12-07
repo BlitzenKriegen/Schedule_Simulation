@@ -1,5 +1,4 @@
 // Enrik Rushiti & Kiril Sikov
-package procSim;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +16,11 @@ public class Simulator {
         Settings usrRules = new Settings(5, 10);
         List<Process> listOfProcesses = createProcList(usrRules);
         
-        System.out.println("Running FCFS:");
-        FCFS(listOfProcesses);
+        // user menu to choose which algorithm to run
+        
+        
+        System.out.println("Running Prio:");
+        Priority(listOfProcesses);
 
         double averageWaitingTime = 0;
         int numOfProcesses = listOfProcesses.size();
@@ -107,14 +109,48 @@ public class Simulator {
      * - Processes are executed in order of their burst time
      */
     public static void SJF(List<Process> listOfProcesses) {
-        
-        
-    
+        // Sort the list of processes by burst time
+        Collections.sort(listOfProcesses, new BurstTimeComparator());
+
+        for (int i = 0; i < listOfProcesses.size(); i++) {
+            Process currentProc = listOfProcesses.get(i);
+
+            // For processes with a pid > 1
+            if (i != 0) {
+                Process prevProc = listOfProcesses.get(i - 1);
+                currentProc.setWaitingTime(prevProc.getWaitingTime() + prevProc.getBurstTime());
+                currentProc.setTurnaroundTime(currentProc.getWaitingTime() + currentProc.getBurstTime());
+            }
+            // For the first process
+            else {
+                currentProc.setWaitingTime(0);
+                currentProc.setTurnaroundTime(currentProc.getBurstTime());
+            }
+        }         
     }
 
+    /*
+     * Priority Scheduling Algorithm
+     * - Processes are executed in order of their priority
+     */
+    public static void Priority(List<Process> listOfProcesses) {
+        // Sort the list of processes by priority
+        Collections.sort(listOfProcesses, new PriorityComparator());
 
+        for (int i = 0; i < listOfProcesses.size(); i++) {
+            Process currentProc = listOfProcesses.get(i);
+
+            // For processes with a pid > 1
+            if (i != 0) {
+                Process prevProc = listOfProcesses.get(i - 1);
+                currentProc.setWaitingTime(prevProc.getWaitingTime() + prevProc.getBurstTime());
+                currentProc.setTurnaroundTime(currentProc.getWaitingTime() + currentProc.getBurstTime());
+            }
+            // For the first process
+            else {
+                currentProc.setWaitingTime(0);
+                currentProc.setTurnaroundTime(currentProc.getBurstTime());
+            }
+        }
+    }
 }
-
-
-
-
