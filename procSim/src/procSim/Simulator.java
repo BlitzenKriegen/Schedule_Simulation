@@ -8,19 +8,13 @@ import java.util.Collections;
 
 public class Simulator {
 
-    // use this for round robin when we get to it
-    // private int timeQuantum = 4;
-
     public static void main(String[] args) {
         /* Settings usrRules = getSettings(); */
         Settings usrRules = new Settings(5, 10);
         List<Process> listOfProcesses = createProcList(usrRules);
-        
-        // user menu to choose which algorithm to run
-        
-        
+             
         System.out.println("Running Prio:");
-        Priority(listOfProcesses);
+        RR(listOfProcesses);
 
         double averageWaitingTime = 0;
         int numOfProcesses = listOfProcesses.size();
@@ -153,4 +147,70 @@ public class Simulator {
             }
         }
     }
+
+    /*
+     * Round Robin Scheduling Algorithm
+     * - Processes are executed in order of their arrival
+     * - Each process is given a time quantum of 4ms
+     * - If a process is not finished after its time quantum, it is moved to the end of the ready queue
+     */
+    public static void RR(List<Process> listOfProcesses) {
+        int timeQuantum = 4;
+        int time = 0;
+        int numOfProcesses = listOfProcesses.size();
+        int[] remainingBurstTime = new int[numOfProcesses];
+        int[] waitingTime = new int[numOfProcesses];
+        int[] turnaroundTime = new int[numOfProcesses];
+
+        // Copy the burst times of each process into the remainingBurstTime array
+        for (int i = 0; i < numOfProcesses; i++) {
+            remainingBurstTime[i] = listOfProcesses.get(i).getBurstTime();
+        }
+
+        // While there are still processes in the ready queue
+        while (true) {
+            boolean done = true;
+
+            // For each process in the ready queue
+            for (int i = 0; i < numOfProcesses; i++) {
+                // If the process has not finished
+                if (remainingBurstTime[i] > 0) {
+                    done = false;
+
+                    // If the process has a burst time greater than the time quantum
+                    if (remainingBurstTime[i] > timeQuantum) {
+                        // Add the time quantum to the time
+                        time += timeQuantum;
+                        // Subtract the time quantum from the process' remaining burst time
+                        remainingBurstTime[i] -= timeQuantum;
+                    }
+                    // If the process has a burst time less than or equal to the time quantum
+                    else {
+                        // Add the process' remaining burst time to the time
+                        time += remainingBurstTime[i];
+                        // Set the process' remaining burst time to 0
+                        remainingBurstTime[i] = 0;
+
+                        // Calculate the process' waiting time
+                        waitingTime[i] = time - listOfProcesses.get(i).getBurstTime();
+                        // Calculate the process' turnaround time
+                        turnaroundTime[i] = time;
+                    }
+                }
+            }
+
+            // If all processes have finished
+            if (done == true) {
+                break;
+            }
+        }
+
+        // Set the waiting time and turnaround time of each process
+        for (int i = 0; i < numOfProcesses; i++) {
+            listOfProcesses.get(i).setWaitingTime(waitingTime[i]);
+            listOfProcesses.get(i).setTurnaroundTime(turnaroundTime[i]);
+        }
+    }
+
+    
 }
