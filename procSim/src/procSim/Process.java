@@ -1,5 +1,5 @@
 // Enrik Rushiti & Kiril Sikov
-package procSim;
+package application;
 // Enrik Rushiti & Kiril Sikov
 /**
  * The following is the implementation of the
@@ -10,11 +10,11 @@ package procSim;
  *
  */
 public class Process {
-    private int burstTime;
-    private int pid;
-    private int priority;
-    private int waitingTime;
-    private int turnaroundTime;
+    private Integer burstTime;
+    private Integer pid;
+    private Integer priority;
+    private Integer waitingTime;
+    private Integer turnaroundTime;
 
     public Process(int burst) {
         this.burstTime = burst;
@@ -36,7 +36,7 @@ public class Process {
         this.burstTime = this.burstTime -1;
     }
 
-    public int getBurstTime() {
+    public Integer getBurstTime() {
         return burstTime;
     }
 
@@ -44,7 +44,7 @@ public class Process {
         this.burstTime = burstTime;
     }
 
-    public int getPid() {
+    public Integer getPid() {
         return pid;
     }
 
@@ -52,7 +52,7 @@ public class Process {
         this.pid = pid;
     }
 
-    public int getPriority() {
+    public Integer getPriority() {
         return priority;
     }
 
@@ -60,7 +60,7 @@ public class Process {
         this.priority = priority;
     }
 
-    public int getWaitingTime() {
+    public Integer getWaitingTime() {
         return waitingTime;
     }
 
@@ -68,7 +68,7 @@ public class Process {
         this.waitingTime = waitingTime;
     }
 
-    public int getTurnaroundTime() {
+    public Integer getTurnaroundTime() {
         return turnaroundTime;
     }
 
@@ -76,4 +76,3 @@ public class Process {
         this.turnaroundTime = turnaroundTime;
     }
 }
-

@@ -1,36 +1,15 @@
 // Enrik Rushiti & Kiril Sikov
+package application;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 import java.util.Scanner;
-import java.util.Collections;
 
 public class Simulator {
 
-    public static void main(String[] args) {
-        /* Settings usrRules = getSettings(); */
-        Settings usrRules = new Settings(5, 10);
-        List<Process> listOfProcesses = createProcList(usrRules);
-             
-        System.out.println("Running Prio:");
-        RR(listOfProcesses);
-
-        double averageWaitingTime = 0;
-        int numOfProcesses = listOfProcesses.size();
-
-        // Print out the results
-        for (Process p : listOfProcesses) {
-            System.out.println("Process " + p.getPid() + " - burst time: " + p.getBurstTime() + ", waiting time: "
-                    + p.getWaitingTime() + ", turnaround time: " + p.getTurnaroundTime() + ", priority: " + p.getPriority());
-            System.out.println("----------------------------------------");
-            averageWaitingTime += p.getWaitingTime();
-        }
-
-        System.out.println("Average waiting time: " + (averageWaitingTime / numOfProcesses) + "ms");
-    }
-
-    private static List<Process> createProcList(Settings usrRules) {
+    static List<Process> createProcList(Settings usrRules) {
         List<Process> ls = new ArrayList<>();
         Process proc = new Process();
 
@@ -120,7 +99,7 @@ public class Simulator {
                 currentProc.setWaitingTime(0);
                 currentProc.setTurnaroundTime(currentProc.getBurstTime());
             }
-        }         
+        }
     }
 
     /*
@@ -211,6 +190,4 @@ public class Simulator {
             listOfProcesses.get(i).setTurnaroundTime(turnaroundTime[i]);
         }
     }
-
-    
 }

@@ -1,5 +1,5 @@
 // Enrik Rushiti & Kiril Sikov
-package procSim;
+package application;
 
 public class Settings {
     private int maxProcesses;
@@ -31,4 +31,3 @@ public class Settings {
         this.maxBurstTime = maxBurstTime;
     }
 }
-
